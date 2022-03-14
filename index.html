@@ -713,47 +713,8 @@
                     <p>From Blog</p>
                     <h2>Latest Articles</h2>
                 </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <div class="blog-item wow fadeInUp" data-wow-delay="0.1s">
-                            <div class="blog-img">
-                                <img src="img/blog-1.jpg" alt="Blog">
-                            </div>
-                            <div class="blog-text">
-                                <h2>Lorem ipsum dolor sit amet</h2>
-                                <div class="blog-meta">
-                                    <p><i class="far fa-user"></i>Admin</p>
-                                    <p><i class="far fa-list-alt"></i>Web Design</p>
-                                    <p><i class="far fa-calendar-alt"></i>01-Jan-2045</p>
-                                    <p><i class="far fa-comments"></i>5</p>
-                                </div>
-                                <p>
-                                    Lorem ipsum dolor sit amet elit. Nullam commodo mattis mi. Nullam eu erat lectus. Proin viverra risus vitae luctus. Proin ut ante, vitae sapien. Fusce sem ac erat rhoncus, ornare mattis nisl massa et eros vitae pulvin
-                                </p>
-                                <a class="btn" href="">Read More <i class="fa fa-angle-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <div class="blog-item wow fadeInUp" data-wow-delay="0.3s">
-                            <div class="blog-img">
-                                <img src="img/blog-2.jpg" alt="Blog">
-                            </div>
-                            <div class="blog-text">
-                                <h2>Lorem ipsum dolor sit amet</h2>
-                                <div class="blog-meta">
-                                    <p><i class="far fa-user"></i>Admin</p>
-                                    <p><i class="far fa-list-alt"></i>Apps Design</p>
-                                    <p><i class="far fa-calendar-alt"></i>01-Jan-2045</p>
-                                    <p><i class="far fa-comments"></i>10</p>
-                                </div>
-                                <p>
-                                    Lorem ipsum dolor sit amet elit. Nullam commodo mattis mi. Nullam eu erat lectus. Proin viverra risus vitae luctus. Proin ut ante, vitae sapien. Fusce sem ac erat rhoncus, ornare mattis nisl massa et eros vitae pulvin
-                                </p>
-                                <a class="btn" href="">Read More <i class="fa fa-angle-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
+                <div class="row" id="myBlogs">
+                    
                 </div>
             </div>
         </div>
@@ -815,5 +776,32 @@
 
         <!-- Template Javascript -->
         <script src="js/main.js"></script>
+		<script>
+			$.ajax({
+				url: "https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Fmedium.com%2Ffeed%2F%40shethap.tech",
+				type: "POST",
+				dataType: "jsonp",
+				crossDomain: true,
+				format: "jsonp",
+				success:function(response){
+					var innerhtml = prepareBlogHTML(response.items);
+					$("#myBlogs").html(innerhtml);
+				},
+				error:function(error){
+					console.log('message Error' + JSON.stringify(error));
+				}  
+			});    
+			function prepareBlogHTML(blogs) {
+				var finalHTML = '';
+				$.each(blogs, function(index, blog) {
+					var div1 = '<div class="col-lg-6"><div class="blog-item wow fadeInUp" data-wow-delay="0.3s"><div class="blog-img"><img src="img/blog-2.jpg" alt="Blog"></div><div class="blog-text">';
+					var div2 = '<h2>'+ blog.title +'</h2>';
+					var div3 = '<div class="blog-meta"><p><i class="far fa-user"></i>' + blog.author + '</p><p><i class="far fa-calendar-alt"></i>' + blog.pubDate + '</p><p><i class="far fa-comments"></i>10</p></div><div><p><i class="far fa-list-alt"></i> '+blog.categories.join(', ')+'</p></div><p>' + blog.content.substring(blog.content.indexOf('<p>'),500) + '...</p>';
+					var div4= '<a class="btn" href="'+blog.link+'">Read More <i class="fa fa-angle-right"></i></a></div></div></div>';
+					finalHTML = (div1+div2+div3+div4);
+				});
+				return finalHTML;
+			}
+		</script>
     </body>
 </html>
