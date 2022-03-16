@@ -794,11 +794,11 @@
 			function prepareBlogHTML(blogs) {
 				var finalHTML = '';
 				$.each(blogs, function(index, blog) {
-					var div1 = '<div class="col-lg-6"><div class="blog-item wow fadeInUp" data-wow-delay="0.3s"><div class="blog-img"><img src="img/blog-2.jpg" alt="Blog"></div><div class="blog-text">';
+					var div1 = '<div class="col-lg-6"><div class="blog-item wow fadeInUp" data-wow-delay="0.3s"><div class="blog-text">';
 					var div2 = '<h2>'+ blog.title +'</h2>';
 					var div3 = '<div class="blog-meta"><p><i class="far fa-user"></i>' + blog.author + '</p><p><i class="far fa-calendar-alt"></i>' + blog.pubDate + '</p><p><i class="far fa-comments"></i>10</p></div><div><p><i class="far fa-list-alt"></i> '+blog.categories.join(', ')+'</p></div><p>' + blog.content.substring(blog.content.indexOf('<p>'),500) + '...</p>';
 					var div4= '<a class="btn" href="'+blog.link+'">Read More <i class="fa fa-angle-right"></i></a></div></div></div>';
-					finalHTML = (div1+div2+div3+div4);
+					finalHTML = finalHTML + (div1+div2+div3+div4);
 				});
 				return finalHTML;
 			}
