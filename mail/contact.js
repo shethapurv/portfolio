@@ -15,8 +15,10 @@ $(function () {
             $this.prop("disabled", true);
 
             $.ajax({
-                url: "contact.php",
+                url: "https://script.google.com/macros/s/AKfycbwlNXLAcdohVnRBgm5iBFMbFbu6jjTDA0Cmwg-K-WwMAuEp-TFRUlEXFs4VICay67-9/exec",
                 type: "POST",
+				dataType: "json",
+				crossDomain: true,
                 data: {
                     name: name,
                     email: email,
